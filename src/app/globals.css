@@ -1,20 +1,38 @@
 @import "tailwindcss";
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+/* — TRACE Brand Type System — */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Mono:wght@300;400;500&display=swap');
 
 :root {
+  /* Core */
   --background: #080808;
   --foreground: #e0dcd5;
+
+  /* Brand palette */
   --brand-black: #080808;
   --brand-white: #ffffff;
   --brand-sand: #a09a8a;
   --brand-charcoal: #303030;
   --brand-stone: #8a8578;
   --brand-cream: #c0b8a4;
+  --brand-muted: #6b6558;
+  --brand-muted-dim: #4a4538;
+  --brand-muted-dimmer: #3a3538;
+
+  /* Accents */
   --brand-glitch-red: #a03a3a;
   --brand-glitch-blue: #3a5a8a;
+  --brand-border: #1a1a1a;
+  --brand-border-light: #0d0d0d;
+
+  /* Typography */
   --font-display: 'Space Grotesk', sans-serif;
-  --font-body: 'Inter', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+
+  /* Elevation */
+  --card-bg: #0d0d0d;
+  --card-border: #1a1a1a;
+  --card-radius: 8px;
 }
 
 @theme inline {
@@ -24,37 +42,121 @@
   --color-charcoal: var(--brand-charcoal);
   --color-stone: var(--brand-stone);
   --color-cream: var(--brand-cream);
+  --color-muted: var(--brand-muted);
+  --color-muted-dim: var(--brand-muted-dim);
+  --color-border: var(--brand-border);
   --font-display: var(--font-display);
-  --font-body: var(--font-body);
+  --font-mono: var(--font-mono);
 }
 
+/* ─── Reset & Base ─── */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
+html { scroll-behavior: smooth; }
+
 body {
-  background: var(--brand-black);
+  background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-body);
+  font-family: var(--font-mono);
+  font-weight: 300;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
 }
 
-/* TRACE utility classes */
+::selection {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--brand-white);
+}
+
+/* ─── Focus visible ─── */
+:focus-visible {
+  outline: 1px solid var(--brand-muted);
+  outline-offset: 2px;
+}
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--background); }
+::-webkit-scrollbar-thumb { background: var(--brand-border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--brand-charcoal); }
+
+/* ─── Noise texture ─── */
+.trace-noise::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+  pointer-events: none;
+}
+
+/* ─── TRACE utility classes ─── */
 .trace-display {
   font-family: var(--font-display);
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
+.trace-mono {
+  font-family: var(--font-mono);
+  letter-spacing: 0.05em;
+}
+
 .trace-border {
-  border: 1px solid #1a1a1a;
+  border: 1px solid var(--brand-border);
 }
 
 .trace-card {
-  background: #0d0d0d;
-  border: 1px solid #1a1a1a;
-  border-radius: 8px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--card-radius);
+  transition: border-color 0.3s ease, background 0.3s ease;
 }
 
-/* Stencil × Glitch logo animation */
+.trace-card:hover {
+  border-color: var(--brand-charcoal);
+}
+
+/* Stencil button */
+.trace-btn-stencil {
+  position: relative;
+  border: 1px solid var(--brand-border);
+  color: var(--brand-white);
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 0.75rem 2rem;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.trace-btn-stencil::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--brand-white);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease;
+  z-index: -1;
+}
+
+.trace-btn-stencil:hover {
+  color: var(--brand-black);
+}
+
+.trace-btn-stencil:hover::before {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* ─── Stencil × Glitch logo animations ─── */
 @keyframes stencil-draw {
   0% { stroke-dashoffset: 800; }
   60% { stroke-dashoffset: 0; }
@@ -95,6 +197,16 @@ body {
   90% { transform: translate(-1px, 1px); }
 }
 
+@keyframes glitch-skew {
+  0% { transform: skew(0deg); }
+  20% { transform: skew(-2deg); }
+  40% { transform: skew(1deg); }
+  60% { transform: skew(-1deg); }
+  80% { transform: skew(2deg); }
+  100% { transform: skew(0deg); }
+}
+
+/* Logo animation classes */
 .logo-stencil-path {
   fill: none;
   stroke: #ffffff;
@@ -149,8 +261,85 @@ body {
   animation: vhs-noise 0.1s infinite;
 }
 
-/* Scrollbar */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #080808; }
-::-webkit-scrollbar-thumb { background: #1a1a1a; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #303030; }
+/* Glitch hover for any text */
+.glitch-hover {
+  position: relative;
+  display: inline-block;
+}
+
+.glitch-hover::before,
+.glitch-hover::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.glitch-hover::before {
+  color: var(--brand-glitch-red);
+  z-index: -1;
+}
+
+.glitch-hover::after {
+  color: var(--brand-glitch-blue);
+  z-index: -2;
+}
+
+.glitch-hover:hover::before {
+  opacity: 0.4;
+  animation: glitch-flash 0.8s ease-in-out;
+  transform: translate(-2px, 1px);
+}
+
+.glitch-hover:hover::after {
+  opacity: 0.4;
+  animation: glitch-flash 0.6s ease-in-out;
+  transform: translate(2px, -1px);
+}
+
+/* Stencil underline */
+.stencil-underline {
+  position: relative;
+  text-decoration: none;
+}
+
+.stencil-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--brand-muted);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease;
+}
+
+.stencil-underline:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* Quantity input stencil style */
+.stencil-qty-btn {
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid var(--brand-border);
+  color: var(--brand-white);
+  background: transparent;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stencil-qty-btn:hover {
+  background: var(--brand-white);
+  color: var(--brand-black);
+}
