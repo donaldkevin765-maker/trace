@@ -1,0 +1,156 @@
+@import "tailwindcss";
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+:root {
+  --background: #080808;
+  --foreground: #e0dcd5;
+  --brand-black: #080808;
+  --brand-white: #ffffff;
+  --brand-sand: #a09a8a;
+  --brand-charcoal: #303030;
+  --brand-stone: #8a8578;
+  --brand-cream: #c0b8a4;
+  --brand-glitch-red: #a03a3a;
+  --brand-glitch-blue: #3a5a8a;
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-sand: var(--brand-sand);
+  --color-charcoal: var(--brand-charcoal);
+  --color-stone: var(--brand-stone);
+  --color-cream: var(--brand-cream);
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--brand-black);
+  color: var(--foreground);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* TRACE utility classes */
+.trace-display {
+  font-family: var(--font-display);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.trace-border {
+  border: 1px solid #1a1a1a;
+}
+
+.trace-card {
+  background: #0d0d0d;
+  border: 1px solid #1a1a1a;
+  border-radius: 8px;
+}
+
+/* Stencil × Glitch logo animation */
+@keyframes stencil-draw {
+  0% { stroke-dashoffset: 800; }
+  60% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: 0; }
+}
+
+@keyframes glitch-flash {
+  0%, 10%, 100% { opacity: 0; }
+  2%, 8% { opacity: 0.6; }
+  4%, 6% { opacity: 0.3; }
+}
+
+@keyframes scanline-sweep {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+@keyframes letter-fade-in {
+  0% { opacity: 0; transform: translateY(8px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes tagline-fade {
+  0%, 70% { opacity: 0; transform: translateY(4px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes vhs-noise {
+  0%, 100% { transform: translate(0); }
+  10% { transform: translate(-1px, 1px); }
+  20% { transform: translate(1px, -1px); }
+  30% { transform: translate(-1px, -1px); }
+  40% { transform: translate(1px, 1px); }
+  50% { transform: translate(-1px, 2px); }
+  60% { transform: translate(1px, -2px); }
+  70% { transform: translate(-2px, 1px); }
+  80% { transform: translate(2px, -1px); }
+  90% { transform: translate(-1px, 1px); }
+}
+
+.logo-stencil-path {
+  fill: none;
+  stroke: #ffffff;
+  stroke-width: 3;
+  stroke-dasharray: 800;
+  stroke-dashoffset: 800;
+  animation: stencil-draw 2s ease-out forwards;
+}
+
+.logo-glitch-red {
+  animation: glitch-flash 3s ease-in-out infinite;
+  animation-delay: 1.5s;
+}
+
+.logo-glitch-blue {
+  animation: glitch-flash 2.5s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+.logo-letter {
+  opacity: 0;
+  animation: letter-fade-in 0.4s ease-out forwards;
+}
+
+.logo-letter:nth-child(1) { animation-delay: 1.6s; }
+.logo-letter:nth-child(2) { animation-delay: 1.8s; }
+.logo-letter:nth-child(3) { animation-delay: 2.0s; }
+.logo-letter:nth-child(4) { animation-delay: 2.2s; }
+.logo-letter:nth-child(5) { animation-delay: 2.4s; }
+
+.logo-tagline {
+  opacity: 0;
+  animation: tagline-fade 1s ease-out forwards;
+  animation-delay: 3s;
+}
+
+.logo-scanlines {
+  position: relative;
+  overflow: hidden;
+}
+
+.logo-scanlines::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: rgba(255,255,255,0.08);
+  animation: scanline-sweep 4s linear infinite;
+}
+
+.logo-vhs {
+  animation: vhs-noise 0.1s infinite;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #080808; }
+::-webkit-scrollbar-thumb { background: #1a1a1a; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #303030; }

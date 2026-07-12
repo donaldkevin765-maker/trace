@@ -1,0 +1,12 @@
+{
+  "name": "TRACE",
+  "short_name": "TRACE",
+  "description": "Lascia la tua traccia — Basic curato",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#080808",
+  "theme_color": "#080808",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "32x32", "type": "image/svg+xml" }
+  ]
+}
