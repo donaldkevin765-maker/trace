@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TRACE — Logo Concepts (50 opzioni)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;900&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #080808;
+      color: #e0dcd5;
+      font-family: 'DM Mono', monospace;
+      font-weight: 300;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 1400px; margin: 0 auto; padding: 2rem; }
+    h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.5rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #fff;
+      text-align: center;
+      padding: 3rem 0 0.5rem;
+    }
+    .subtitle {
+      text-align: center;
+      color: #6b6558;
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 3rem;
+    }
+    .category {
+      margin-bottom: 3rem;
+    }
+    .category-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #a09a8a;
+      border-bottom: 1px solid #1a1a1a;
+      padding-bottom: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+    .category-title span {
+      color: #4a4538;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.05em;
+      margin-left: 1rem;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1rem;
+    }
+    .logo-card {
+      background: #0d0d0d;
+      border: 1px solid #1a1a1a;
+      border-radius: 8px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      aspect-ratio: 1;
+      transition: border-color 0.3s ease, background 0.3s ease;
+      cursor: pointer;
+      position: relative;
+    }
+    .logo-card:hover {
+      border-color: #303030;
+      background: #111;
+    }
+    .logo-card svg {
+      max-width: 100%;
+      max-height: 80%;
+    }
+    .logo-label {
+      position: absolute;
+      bottom: 0.75rem;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      color: #4a4538;
+      font-family: 'DM Mono', monospace;
+      text-transform: uppercase;
+    }
+    .selected { border-color: #a09a8a !important; background: #141414 !important; }
+    .selected .logo-label { color: #a09a8a; }
+    @media (max-width: 600px) {
+      .grid { grid-template-columns: repeat(2, 1fr); }
+      h1 { font-size: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>TRACE</h1>
+    <p class="subtitle">50 Logo Concepts — Premi su uno per selezionarlo</p>
+
+    <!-- ═══════════════ STENCIL SERIES ═══════════════ -->
+    <div class="category">
+      <div class="category-title">Stencil Series <span>1–10</span></div>
+      <div class="grid" id="stencil"></div>
+    </div>
+
+    <!-- ═══════════════ GLITCH SERIES ═══════════════ -->
+    <div class="category">
+      <div class="category-title">Glitch Series <span>11–20</span></div>
+      <div class="grid" id="glitch"></div>
+    </div>
+
+    <!-- ═══════════════ TYPOGRAPHY SERIES ═══════════════ -->
+    <div class="category">
+      <div class="category-title">Typography Series <span>21–30</span></div>
+      <div class="grid" id="typo"></div>
+    </div>
+
+    <!-- ═══════════════ SYMBOL SERIES ═══════════════ -->
+    <div class="category">
+      <div class="category-title">Symbol Series <span>31–40</span></div>
+      <div class="grid" id="symbol"></div>
+    </div>
+
+    <!-- ═══════════════ INDUSTRIAL SERIES ═══════════════ -->
+    <div class="category">
+      <div class="category-title">Industrial Series <span>41–50</span></div>
+      <div class="grid" id="industrial"></div>
+    </div>
+  </div>
+
+  <script>
+    const SELECTED = new Set();
+
+    function card(label, svgContent) {
+      const div = document.createElement('div');
+      div.className = 'logo-card';
+      div.innerHTML = svgContent + `<div class="logo-label">${label}</div>`;
+      div.addEventListener('click', () => {
+        div.classList.toggle('selected');
+        const num = label.match(/^(\d+)/)?.[1];
+        if (div.classList.contains('selected')) SELECTED.add(num);
+        else SELECTED.delete(num);
+      });
+      return div;
+    }
+
+    // ─── HELPERS ───
+    const S = (w, h) => `viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg"`;
+    const R = (x, y, w, h, fill, rx) => `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${fill}"${rx ? ` rx="${rx}"` : ''}/>`;
+    const T = (x, y, text, size, fill, props) => `<text x="${x}" y="${y}" font-family="'Space Grotesk','Arial Black',sans-serif" font-size="${size}" font-weight="900" fill="${fill}" text-anchor="middle" dominant-baseline="central"${props || ''}>${text}</text>`;
+
+    // ═══════════════ STENCIL 1-10 ═══════════════
+    const stencilLogos = [
+      // 1 - Classic stencil border
+      `<svg ${S(240,80)}>
+        <rect x="2" y="2" width="236" height="76" rx="4" fill="none" stroke="#fff" stroke-width="2.5"/>
+        <rect x="10" y="10" width="220" height="60" rx="2" fill="none" stroke="#fff" stroke-width="1" stroke-dasharray="6 4"/>
+        ${T(120,42,'TRACE',34,'#fff')}
+      </svg>`,
+      // 2 - Double border stencil
+      `<svg ${S(240,80)}>
+        <rect x="2" y="2" width="236" height="76" rx="4" fill="none" stroke="#fff" stroke-width="2.5"/>
+        <rect x="8" y="8" width="224" height="64" rx="2" fill="none" stroke="#666" stroke-width="1" stroke-dasharray="3 3"/>
+        ${T(120,42,'TRACE',34,'#fff')}
+      </svg>`,
+      // 3 - Cutout stencil
+      `<svg ${S(240,80)}>
+        <rect x="2" y="2" width="236" height="76" rx="4" fill="#0d0d0d" stroke="#fff" stroke-width="2.5"/>
+        <clipPath id="c3"><rect x="2" y="2" width="236" height="76" rx="4"/></clipPath>
+        <g clip-path="url(#c3)">
+          <rect x="0" y="28" width="240" height="24" fill="#080808" stroke="none"/>
+          ${T(120,42,'TRACE',34,'#fff')}
+        </g>
+      </svg>`,
+      // 4 - Corner stencil
+      `<svg ${S(240,80)}>
+        <line x1="2" y1="2" x2="40" y2="2" stroke="#fff" stroke-width="2.5"/>
+        <line x1="2" y1="2" x2="2" y2="30" stroke="#fff" stroke-width="2.5"/>
+        <line x1="238" y1="2" x2="200" y2="2" stroke="#fff" stroke-width="2.5"/>
+        <line x1="238" y1="2" x2="238" y2="30" stroke="#fff" stroke-width="2.5"/>
+        <line x1="2" y1="78" x2="40" y2="78" stroke="#fff" stroke-width="2.5"/>
+        <line x1="2" y1="78" x2="2" y2="50" stroke="#fff" stroke-width="2.5"/>
+        <line x1="238" y1="78" x2="200" y2="78" stroke="#fff" stroke-width="2.5"/>
+        <line x1="238" y1="78" x2="238" y2="50" stroke="#fff" stroke-width="2.5"/>
+        ${T(120,42,'TRACE',34,'#fff')}
+      </svg>`,
+      // 5 - Borderless stencil heavy
+      `<svg ${S(240,80)}>
+        ${T(120,42,'TRACE',42,'#fff')}
+        <line x1="20" y1="60" x2="220" y2="60" stroke="#fff" stroke-width="3"/>
+        <line x1="30" y1="66" x2="210" y2="66" stroke="#303030" stroke-width="1.5"/>
+      </svg>`,
+      // 6 - Industrial stencil plate
+      `<svg ${S(240,80)}>
+        <rect x="2" y="2" width="236" height="76" rx="2" fill="#0d0d0d" stroke="#303030" stroke-width="1.5"/>
+        <rect x="8" y="8" width="224" height="64" rx="1" fill="none" stroke="#fff" stroke-width="2"/>
+        <circle cx="20" cy="20" r="3" fill="none" stroke="#303030" stroke-width="1.5"/>
+        <circle cx="220" cy="20" r="3" fill="none" stroke="#303030" stroke-width="1.5"/>
+        <circle cx="20" cy="60" r="3" fill="none" stroke="#303030" stroke-width="1.5"/>
+        <circle cx="220" cy="60" r="3" fill="none" stroke="#303030" stroke-width="1.5"/>
+        ${T(120,42,'TRACE',30,'#fff')}
+      </svg>`,
+      // 7 - Stencil gaps (cutout letter edges)
+      `<svg ${S(240,80)}>
+        <rect x="2" y="2" width="236" height="76" rx="4" fill="none" stroke="#fff" stroke-width="2.5"/>
+        ${T(120,42,'TRACE',34,'#fff')}
+        <rect x="30" y="20" width="4" height="8" fill="#080808"/>
+        <rect x="78" y="52" width="4" height="8" fill="#080808"/>
+        <rect x="126" y="20" width="4" height="8" fill="#080808"/>
+        <rect x="174" y="52" width="4" height="8" fill="#080808"/>
+      </svg>`,
+      // 8 - Stencil with rivets
+      `<svg ${S(240,80)}>
+        <rect x="2" y="2" width="236" height="76" rx="2" fill="none" stroke="#fff" stroke-width="2"/>
+        <circle cx="12" cy="12" r="2" fill="#fff"/>
+        <circle cx="228" cy="12" r="2" fill="#fff"/>
+        <circle cx="12" cy="68" r="2" fill="#fff"/>
+        <circle cx="228" cy="68" r="2" fill="#fff"/>
+        ${T(120,42,'TRACE',32,'#fff')}
+      </svg>`,
+      // 9 - Stencil flag
+      `<svg ${S(240,100)}>
+        <rect x="2" y="2" width="80" height="96" fill="#fff"/>
+        <text x="42" y="52" font-family="'Space Grotesk','Arial Black',sans-serif" font-size="28" font-weight="900" fill="#080808" text-anchor="middle" dominant-baseline="central">T</text>
+        <line x1="82" y1="2" x2="238" y2="2" stroke="#fff" stroke-width="2"/>
+        <line x1="82" y1="2" x2="82" y2="98" stroke="#fff" stroke-width="2"/>
+        ${T(170,30,'RACE',26,'#fff')}
+        <rect x="82" y="55" width="140" height="1.5" fill="#303030"/>
+        <text x="170" y="72" font-family="'DM Mono',monospace" font-size="9" fill="#6b6558" text-anchor="middle" letter-spacing="4">EST. 2026</text>
+      </svg>`,
+      // 10 - Minimal stencil outline
+      `<svg ${S(240,80)}>
+        ${T(120,42,'TRACE',38,'#080808')}
+        <text x="120" y="42" font-family="'Space Grotesk','Arial Black',sans-serif" font-size="38" font-weight="900" fill="none" stroke="#fff" stroke-width="1.5" text-anchor="middle" dominant-baseline="central">TRACE</text>
+      </svg>`,
+    ];
+
+    // ═══════════════ GLITCH 11-20 ═══════════════
+    const glitchLogos = [
+      // 11 - RGB split
+      `<svg ${S(240,80)}>
+        ${T(120,42,'TRACE',38,'#fff')}
+        <text x="122" y="44" font-family="'Space Grotesk','Arial Black',sans-serif" font-size="38" font-weight="900" fill="#a03a3a" text-anchor="middle" dominant-baseline="central" opacity="0.4">TRACE</text>
+        <text x="118" y="40" font-family="'Space Grotesk','Arial Black',sans-serif" font-size="38" font-weight="900" fill="#3a5a8a" text-anchor="middle" dominant-baseline="central" opacity="0.4">TRACE</text>
+      </svg>`,
+      // 12 - Horizontal shift glitch
+      `<svg ${S(240,80)}>
+        <clipPath id="g12a"><rect x="0" y="0" width="240" height="28"/></clipPath>
+        <clipPath id="g12b"><rect x="0" y="28" width="240" height="24"/></clipPath>
+        <clipPath id="g12c"><rect x="0" y="52" width="240" height="28"/></clipPath>
+        <g clip-path="url(#g12a)">${T(118,42,'TRACE',38,'#a03a3a')}</g>
+        <g clip-path="url(#g12b)">${T(122,42,'TRACE',38,'#fff')}</g>
+        <g clip-path="url(#g12c)">${T(115,42,'TRACE',38,'#3a5a8a')}</g>
+      </svg>`,
+      // 13 - Scanline glitch
+      `<svg ${S(240,80)}>
+        <defs>
+          <pattern id="scan13" width="4" height="4" patternUnits="userSpaceOnUse">
+            <rect width="4" height="2" fill="rgba(0,0,0,0.3)"/>
+          </pattern>
+        </defs>
+        ${T(120,42,'TRACE',38,'#fff')}
+        <rect x="0" y="0" width="240" height="80" fill="url(#scan13)"/>
+      </svg>`,
+      // 14 - VHS distortion
+      `<svg ${S(240,80)}>
+        ${T(120,40,'TRACE',36,'#fff')}
+        ${T(124,44,'TRACE',34,'#a03a3a')}
+        ${T(116,40,'TRACE',34,'#3a5a8a')}
+        <rect x="0" y="0" width="240" height="3" fill="rgba(255,255,255,0.1)"/>
+        <rect x="0" y="77" width="240" height="3" fill="rgba(255,255,255,0.08)"/>
+      </svg>`,
+      // 15 - Pixel crack
+      `<svg ${S(240,80)}>
+        ${T(120,42,'TRACE',38,'#fff')}
+        <rect x="50" y="18" width="4" height="4" fill="#080808"/>
+        <rect x="98" y="52" width="4" height="4" fill="#080808"/>
+        <rect x="145" y="24" width="4" height="4" fill="#080808"/>
+        <rect x="160" y="10" width="3" height="3" fill="#080808"/>
+        <rect x="70" y="58" width="3" height="3" fill="#080808"/>
+      </svg>`,
+      // 16 - Error bar
+      `<svg ${S(240,80)}>
+        <rect x="0" y="0" width="240" height="80" fill="#080808"/>
+        <rect x="0" y="32" width="240" height="16" fill="#111"/>
+        ${T(120,42,'TRACE',36,'#fff')}
+        <line x1="0" y1="32" x2="240" y2="32" stroke="#a03a3a" stroke-width="1" opacity="0.5"/>
+        <line x1="0" y1="48" x2="240" y2="48" stroke="#3a5a8a" stroke-width="1" opacity="0.5"/>
+      </svg>`,
+      // 17 - Glitch frame
+      `<svg ${S(240,80)}>
+        <rect x="2" y="2" width="236" height="76" fill="none" stroke="#fff" stroke-width="2"/>
+        <rect x="4" y="4" width="232" height="72" fill="none" stroke="#a03a3a" stroke-width="0.5" transform="translate(1,0)"/>
+        <rect x="4" y="4" width="232" height="72" fill="none" stroke="#3a5a8a" stroke-width="0.5" transform="translate(-1,0)"/>
+        ${T(120,42,'TRACE',34,'#fff')}
+      </svg>`,
+      // 18 - Static noise overlay
+      `<svg ${S(240,80)}>
+        ${T(120,42,'TRACE',38,'#fff')}
+        <filter id="n18">
+          <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" result="noise"/>
+          <feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0.15 0" in="noise"/>
+        </filter>
+        <rect x="0" y="0" width="240" height="80" filter="url(#n18)" opacity="0.3"/>
+      </svg>`,
+      // 19 - Ghost double
+      `<svg ${S(240,80)}>
+        <text x="118" y="42" font-family="'Space Grotesk','Arial Black',sans-serif" font-size="38" font-weight="900" fill="#303030" text-anchor="middle" dominant-baseline="central">TRACE</text>
+        <text x="119" y="43" font-family="'Space Grotesk','Arial Black',sans-serif" font-size="38" font-weight="900" fill="#666" text-anchor="middle" dominant-baseline="central">TRACE</text>
+        ${T(120,42,'TRACE',38,'#fff')}
+      </svg>`,
+      // 20 - Glitch skew
+      `<svg ${S(240,80)}>
+        <g transform="skewX(-3)">
+          ${T(120,42,'TRACE',38,'#a03a3a')}
+        </g>
+        <g transform="skewX(2)">
+          ${T(120,42,'TRACE',38,'#3a5a8a')}
+        </g>
+        <g transform="skewX(0)">
+          ${T(120,42,'TRACE',38,'#fff')}
+        </g>
+      </svg>`,
+    ];
+
+    // ═══════════════ TYPOGRAPHY 21-30 ═══════════════
+    const typoLogos = [
+      // 21 - Stacked vertical
+      `<svg ${S(160,140)}>
+        ${T(80,24,'T',34,'#fff')}
+        <line x1="30" y1="38" x2="130" y2="38" stroke="#303030" stroke-width="1"/>
+        ${T(80,60,'R',24,'#a09a8a')}
+        ${T(80,82,'A',24,'#a09a8a')}
+        ${T(80,102,'C',24,'#a09a8a')}
+        ${T(80,124,'E',24,'#a09a8a')}
+      </svg>`,
+      // 22 - Horizontal with separator
+      `<svg ${S(280,80)}>
+        ${T(100,42,'TRACE',34,'#fff')}
+        <line x1="200" y1="20" x2="200" y2="60" stroke="#303030" stroke-width="1"/>
+        <text x="240" y="42" font-family="'DM Mono',monospace" font-size="9" fill="#6b6558" text-anchor="middle" dominant-baseline="central" letter-spacing="3">EST 2026</text>
+      </svg>`,
+      // 23 - All caps spaced
+      `<svg ${S(280,80)}>
+        <text x="140" y="42" font-family="'Space Grotesk','Arial Black',sans-serif" font-size="32" font-weight="900" fill="#fff" text-anchor="middle" dominant-baseline="central" letter-spacing="16">TRACE</text>
+      </svg>`,
+      // 24 - T monogram large
+      `<svg ${S(160,160)}>
+        <text x="80" y="90" font-family="'Space Grotesk','Arial Black',sans-serif" font-size="100" font-weight="900" fill="#fff" text-anchor="middle" dominant-baseline="central">T</text>
+        <text x="80" y="135" font-family="'DM Mono',monospace" font-size="8" fill="#6b6558" text-anchor="middle" letter-spacing="3">TRACE</text>
+      </svg>`,
+      // 25 - T + RACE stacked
+      `<svg ${S(180,120)}>
+        <text x="50" y="35" font-family="'Space Grotesk','Arial Black',sans-serif" font-size="50" font-weight="900" fill="#fff" text-anchor="middle" dominant-baseline="central">T</text>
+        <line x1="70" y1="12" x2="70" y2="55" stroke="#303030" stroke-width="1"/>
+        <text x="120" y="35" font-family="'Space Grotesk','Arial Black',sans-serif" font-size="24" font-weight="500" fill="#a09a8a" text-anchor="middle" dominant-baseline="central" letter-spacing="6">RACE</text>
+        <line x1="20" y1="65" x2="160" y2="65" stroke="#1a1a1a" stroke-width="1"/>
+        <text x="90" y="95" font-family="'DM Mono',monospace" font-size="8" fill="#4a4538" text-anchor="middle" letter-spacing="4">STREETWEAR</text>
+      </svg>`,
+      // 26 - Thin refined
+      `<svg ${S(240,80)}>
+        <text x="120" y="42" font-family="'Space Grotesk','Arial Black',sans-serif" font-size="36" font-weight="300" fill="#fff" text-anchor="middle" dominant-baseline="central" letter-spacing="8">TRACE</text>
+      </svg>`,
+      // 27 - T bar anchor
+      `<svg ${S(200,140)}>
+        <rect x="40" y="15" width="120" height="10" fill="#fff"/>
+        <rect x="90" y="25" width="20" height="80" fill="#fff"/>
+        <rect x="40" y="90" width="120" height="10" fill="#fff"/>
+        <text x="100" y="125" font-family="'DM Mono',monospace" font-size="8" fill="#6b6558" text-anchor="middle" letter-spacing="3">TRACE</text>
+      </svg>`,
+      // 28 - Rough edges
+      `<svg ${S(240,80)}>
+        <filter id="r28">
+          <feTurbulence type="turbulence" baseFrequency="0.04" numOctaves="2" result="noise"/>
+          <feDisplacementMap in="SourceGraphic" in2="noise" scale="2" xChannelSelector="R" yChannelSelector="G"/>
+        </filter>
+        <text x="120" y="42" font-family="'Space Grotesk','Arial Black',sans-serif" font-size="38" font-weight="900" fill="#fff" text-anchor="middle" dominant-baseline="central" filter="url(#r28)" letter-spacing="4">TRACE</text>
+      </svg>`,
+      // 29 - Condensed bold
+      `<svg ${S(240,80)}>
+        <text x="120" y="42" font-family="'Space Grotesk','Arial Black',sans-serif" font-size="44" font-weight="900" fill="#fff" text-anchor="middle" dominant-baseline="central" letter-spacing="2">TRACE</text>
+      </svg>`,
+      // 30 - Outlined
+      `<svg ${S(240,80)}>
+        <text x="120" y="42" font-family="'Space Grotesk','Arial Black',sans-serif" font-size="38" font-weight="900" fill="none" stroke="#fff" stroke-width="1.5" text-anchor="middle" dominant-baseline="central" letter-spacing="4">TRACE</text>
+        <text x="120" y="42" font-family="'Space Grotesk','Arial Black',sans-serif" font-size="38" font-weight="900" fill="#080808" text-anchor="middle" dominant-baseline="central" letter-spacing="4">TRACE</text>
+      </svg>`,
+    ];
+
+    // ═══════════════ SYMBOL 31-40 ═══════════════
+    const symbolLogos = [
+      // 31 - Arrow T
+      `<svg ${S(160,160)}>
+        <path d="M80 20 L80 140 M30 60 L80 20 L130 60" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+        <text x="80" y="148" font-family="'DM Mono',monospace" font-size="7" fill="#6b6558" text-anchor="middle" letter-spacing="3">TRACE</text>
+      </svg>`,
+      // 32 - Cross T
+      `<svg ${S(160,160)}>
+        <line x1="30" y1="40" x2="130" y2="40" stroke="#fff" stroke-width="8" stroke-linecap="round"/>
+        <line x1="80" y1="40" x2="80" y2="130" stroke="#fff" stroke-width="8" stroke-linecap="round"/>
+        <text x="80" y="148" font-family="'DM Mono',monospace" font-size="7" fill="#6b6558" text-anchor="middle" letter-spacing="3">TRACE</text>
+      </svg>`,
+      // 33 - Stencil T badge
+      `<svg ${S(160,160)}>
+        <rect x="10" y="10" width="140" height="100" rx="6" fill="none" stroke="#fff" stroke-width="3"/>
+        <text x="80" y="68" font-family="'Space Grotesk','Arial Black',sans-serif" font-size="60" font-weight="900" fill="#fff" text-anchor="middle" dominant-baseline="central">T</text>
+        <text x="80" y="140" font-family="'DM Mono',monospace" font-size="7" fill="#6b6558" text-anchor="middle" letter-spacing="3">TRACE</text>
+      </svg>`,
+      // 34 - Tape X
+      `<svg ${S(160,160)}>
+        <g transform="rotate(-30,80,80)">
+          <rect x="30" y="60" width="100" height="40" fill="#080808" stroke="#fff" stroke-width="2" rx="2"/>
+          <text x="80" y="85" font-family="'Space Grotesk','Arial Black',sans-serif" font-size="16" font-weight="900" fill="#fff" text-anchor="middle" dominant-baseline="central">TRACE</text>
+        </g>
+      </svg>`,
+      // 35 - Target T
+      `<svg ${S(160,160)}>
+        <circle cx="80" cy="70" r="50" fill="none" stroke="#fff" stroke-width="2"/>
+        <circle cx="80" cy="70" r="30" fill="none" stroke="#303030" stroke-width="1"/>
+        <text x="80" y="75" font-family="'Space Grotesk','Arial Black',sans-serif" font-size="36" font-weight="900" fill="#fff" text-anchor="middle" dominant-baseline="central">T</text>
+        <text x="80" y="145" font-family="'DM Mono',monospace" font-size="7" fill="#6b6558" text-anchor="middle" letter-spacing="3">TRACE</text>
+      </svg>`,
+      // 36 - Triangle T
+      `<svg ${S(160,160)}>
+        <polygon points="80,20 150,130 10,130" fill="none" stroke="#fff" stroke-width="3"/>
+        <text x="80" y="95" font-family="'Space Grotesk','Arial Black',sans-serif" font-size="28" font-weight="900" fill="#fff" text-anchor="middle" dominant-baseline="central">T</text>
+        <text x="80" y="148" font-family="'DM Mono',monospace" font-size="7" fill="#6b6558" text-anchor="middle" letter-spacing="3">TRACE</text>
+      </svg>`,
+      // 37 - Path T
+      `<svg ${S(160,160)}>
+        <path d="M40 35 L120 35 L120 55 L80 55 L80 130" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+        <text x="80" y="148" font-family="'DM Mono',monospace" font-size="7" fill="#6b6558" text-anchor="middle" letter-spacing="3">TRACE</text>
+      </svg>`,
+      // 38 - Shield
+      `<svg ${S(160,160)}>
+        <path d="M80 15 L145 40 L145 85 C145 120 80 145 80 145 C80 145 15 120 15 85 L15 40 Z" fill="none" stroke="#fff" stroke-width="2.5"/>
+        <text x="80" y="82" font-family="'Space Grotesk','Arial Black',sans-serif" font-size="28" font-weight="900" fill="#fff" text-anchor="middle" dominant-baseline="central">T</text>
+        <text x="80" y="148" font-family="'DM Mono',monospace" font-size="7" fill="#6b6558" text-anchor="middle" letter-spacing="3">TRACE</text>
+      </svg>`,
+      // 39 - Arrow right
+      `<svg ${S(200,100)}>
+        <path d="M30 50 L170 50 M130 20 L170 50 L130 80" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+        <text x="50" y="46" font-family="'Space Grotesk','Arial Black',sans-serif" font-size="12" font-weight="900" fill="#a09a8a" text-anchor="middle" dominant-baseline="central" letter-spacing="2">TRACE</text>
+      </svg>`,
+      // 40 - Dotted T
+      `<svg ${S(160,160)}>
+        <circle cx="50" cy="35" r="4" fill="#fff"/>
+        <circle cx="65" cy="35" r="4" fill="#fff"/>
+        <circle cx="80" cy="35" r="4" fill="#fff"/>
+        <circle cx="95" cy="35" r="4" fill="#fff"/>
+        <circle cx="110" cy="35" r="4" fill="#fff"/>
+        <circle cx="80" cy="50" r="4" fill="#fff"/>
+        <circle cx="80" cy="65" r="4" fill="#fff"/>
+        <circle cx="80" cy="80" r="4" fill="#fff"/>
+        <circle cx="80" cy="95" r="4" fill="#fff"/>
+        <circle cx="80" cy="110" r="4" fill="#fff"/>
+        <text x="80" y="145" font-family="'DM Mono',monospace" font-size="7" fill="#6b6558" text-anchor="middle" letter-spacing="3">TRACE</text>
+      </svg>`,
+    ];
+
+    // ═══════════════ INDUSTRIAL 41-50 ═══════════════
+    const industrialLogos = [
+      // 41 - Hazard tape
+      `<svg ${S(280,80)}>
+        <defs><pattern id="h41" width="20" height="80" patternUnits="userSpaceOnUse" patternTransform="rotate(-30)">
+          <rect width="10" height="80" fill="#111"/>
+          <rect x="10" width="10" height="80" fill="#080808"/>
+        </pattern></defs>
+        <rect x="0" y="0" width="280" height="80" fill="url(#h41)"/>
+        ${T(140,42,'TRACE',34,'#fff')}
+      </svg>`,
+      // 42 - Barcode
+      `<svg ${S(240,100)}>
+        <rect x="10" y="10" width="4" height="60" fill="#fff"/>
+        <rect x="18" y="10" width="2" height="60" fill="#fff"/>
+        <rect x="24" y="10" width="6" height="60" fill="#fff"/>
+        <rect x="34" y="10" width="2" height="60" fill="#fff"/>
+        <rect x="40" y="10" width="8" height="60" fill="#fff"/>
+        <rect x="52" y="10" width="3" height="60" fill="#fff"/>
+        <rect x="59" y="10" width="5" height="60" fill="#fff"/>
+        <text x="140" y="48" font-family="'Space Grotesk','Arial Black',sans-serif" font-size="26" font-weight="900" fill="#fff" text-anchor="middle" dominant-baseline="central">TRACE</text>
+        <rect x="210" y="10" width="3" height="60" fill="#fff"/>
+        <rect x="217" y="10" width="5" height="60" fill="#fff"/>
+        <rect x="226" y="10" width="2" height="60" fill="#fff"/>
+      </svg>`,
+      // 43 - Stamped
+      `<svg ${S(240,80)}>
+        <rect x="2" y="2" width="236" height="76" rx="4" fill="none" stroke="#fff" stroke-width="1.5"/>
+        <circle cx="120" cy="40" r="32" fill="none" stroke="#303030" stroke-width="1" stroke-dasharray="4 3"/>
+        ${T(120,42,'TRACE',28,'#fff')}
+        <circle cx="60" cy="40" r="3" fill="none" stroke="#303030" stroke-width="1"/>
+        <circle cx="180" cy="40" r="3" fill="none" stroke="#303030" stroke-width="1"/>
+      </svg>`,
+      // 44 - Warehouse stencil
+      `<svg ${S(280,100)}>
+        <rect x="2" y="2" width="276" height="96" rx="3" fill="none" stroke="#fff" stroke-width="3"/>
+        <rect x="10" y="10" width="260" height="80" rx="1" fill="none" stroke="#303030" stroke-width="1"/>
+        ${T(140,50,'TRACE',36,'#fff')}
+        <text x="140" y="75" font-family="'DM Mono',monospace" font-size="7" fill="#4a4538" text-anchor="middle" letter-spacing="4">LOT 2026-001</text>
+      </svg>`,
+      // 45 - Welded
+      `<svg ${S(240,80)}>
+        <path d="M2 30 L2 2 L238 2 L238 30" fill="none" stroke="#fff" stroke-width="3"/>
+        <path d="M2 50 L2 78 L238 78 L238 50" fill="none" stroke="#fff" stroke-width="3"/>
+        ${T(120,42,'TRACE',30,'#fff')}
+        <circle cx="20" cy="40" r="3" fill="#303030"/>
+        <circle cx="220" cy="40" r="3" fill="#303030"/>
+      </svg>`,
+      // 46 - Caution
+      `<svg ${S(200,180)}>
+        <polygon points="100,15 190,155 10,155" fill="none" stroke="#fff" stroke-width="3"/>
+        <line x1="100" y1="60" x2="100" y2="110" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="100" cy="135" r="4" fill="#fff"/>
+        <text x="100" y="168" font-family="'DM Mono',monospace" font-size="7" fill="#6b6558" text-anchor="middle" letter-spacing="3">TRACE</text>
+      </svg>`,
+      // 47 - Circuit
+      `<svg ${S(240,80)}>
+        <rect x="2" y="2" width="236" height="76" rx="2" fill="none" stroke="#fff" stroke-width="1.5"/>
+        <path d="M10 20 L50 20 L50 40 L80 40" fill="none" stroke="#303030" stroke-width="1"/>
+        <path d="M230 60 L190 60 L190 40 L160 40" fill="none" stroke="#303030" stroke-width="1"/>
+        <circle cx="10" cy="20" r="2" fill="#303030"/>
+        <circle cx="230" cy="60" r="2" fill="#303030"/>
+        ${T(120,42,'TRACE',30,'#fff')}
+      </svg>`,
+      // 48 - Ripped label
+      `<svg ${S(240,80)}>
+        <path d="M2 10 L2 70 L220 70 L238 55 L238 25 L220 10 Z" fill="#0d0d0d" stroke="#fff" stroke-width="1.5"/>
+        ${T(120,42,'TRACE',28,'#fff')}
+      </svg>`,
+      // 49 - Serial plate
+      `<svg ${S(260,90)}>
+        <rect x="2" y="2" width="256" height="86" rx="3" fill="#0d0d0d" stroke="#303030" stroke-width="1.5"/>
+        <rect x="10" y="10" width="240" height="70" rx="1" fill="none" stroke="#fff" stroke-width="1.5"/>
+        ${T(130,38,'TRACE',28,'#fff')}
+        <text x="130" y="60" font-family="'DM Mono',monospace" font-size="6" fill="#4a4538" text-anchor="middle" letter-spacing="2">S/N: TR-2026-0001</text>
+      </svg>`,
+      // 50 - Concrete
+      `<svg ${S(240,80)}>
+        <filter id="c50">
+          <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="4"/>
+          <feColorMatrix type="matrix" values="0.1 0 0 0 0.05 0 0.1 0 0 0.05 0 0 0.1 0 0.05 0 0 0 1 0"/>
+        </filter>
+        <rect x="0" y="0" width="240" height="80" filter="url(#c50)"/>
+        <rect x="0" y="0" width="240" height="80" fill="rgba(255,255,255,0.06)"/>
+        ${T(120,42,'TRACE',36,'#fff')}
+      </svg>`,
+    ];
+
+    // ─── RENDER ───
+    const labels = (prefix, start) => (_, i) => `${start + i}`;
+
+    ['stencil', 'glitch', 'typo', 'symbol', 'industrial'].forEach((id, ci) => {
+      const container = document.getElementById(id);
+      const logos = [stencilLogos, glitchLogos, typoLogos, symbolLogos, industrialLogos][ci];
+      const starts = [1, 11, 21, 31, 41];
+      logos.forEach((svg, i) => {
+        container.appendChild(card(`${starts[ci] + i}`, svg));
+      });
+    });
+  </script>
+</body>
+</html>

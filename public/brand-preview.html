@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TRACE — Brand Application Preview</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;900&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #080808;
+      color: #e0dcd5;
+      font-family: 'DM Mono', monospace;
+      font-weight: 300;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+
+    h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.5rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #fff;
+      text-align: center;
+      padding: 3rem 0 0.3rem;
+    }
+    .subtitle {
+      text-align: center;
+      color: #6b6558;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 3rem;
+    }
+    .section {
+      margin-bottom: 4rem;
+    }
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #a09a8a;
+      border-bottom: 1px solid #1a1a1a;
+      padding-bottom: 0.75rem;
+      margin-bottom: 2rem;
+    }
+    .section-title span {
+      color: #4a4538;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.05em;
+      margin-left: 1rem;
+    }
+    .brand-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    /* ─── Mockup card ─── */
+    .mockup {
+      background: #0d0d0d;
+      border: 1px solid #1a1a1a;
+      border-radius: 10px;
+      overflow: hidden;
+      transition: border-color 0.3s;
+    }
+    .mockup:hover { border-color: #303030; }
+    .mockup-header {
+      padding: 1rem 1.25rem 0.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .mockup-num {
+      font-size: 0.55rem;
+      letter-spacing: 0.15em;
+      color: #4a4538;
+    }
+    .mockup-role {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.55rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #a09a8a;
+    }
+    .mockup-body {
+      padding: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 160px;
+    }
+    .mockup-label {
+      padding: 0.75rem 1.25rem;
+      border-top: 1px solid #1a1a1a;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .mockup-label-text {
+      font-size: 0.6rem;
+      color: #6b6558;
+    }
+    .mockup-label-use {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.55rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #4a4538;
+    }
+
+    /* ─── Context mockups ─── */
+    .context-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+    .context-card {
+      background: #0d0d0d;
+      border: 1px solid #1a1a1a;
+      border-radius: 10px;
+      padding: 2rem;
+      text-align: center;
+      min-height: 200px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .context-label {
+      font-size: 0.5rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #4a4538;
+      margin-bottom: 1rem;
+    }
+    .box-mockup {
+      position: relative;
+      width: 100%;
+      max-width: 340px;
+      aspect-ratio: 1/0.7;
+      border: 1px solid #1a1a1a;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      margin: 0 auto;
+    }
+    .box-mockup.brutal {
+      background: repeating-linear-gradient(
+        0deg,
+        #0a0a0a 0px, #0a0a0a 20px,
+        #0d0d0d 20px, #0d0d0d 40px
+      );
+    }
+    .box-mockup.premium {
+      background: linear-gradient(135deg, #0a0a0a, #111);
+    }
+    .box-mockup.limited {
+      background: #0d0d0d;
+    }
+    .tag-mockup {
+      width: 100%;
+      max-width: 220px;
+      padding: 2rem 1rem;
+      border: 1px solid #1a1a1a;
+      border-radius: 20px 20px 4px 4px;
+      background: #0a0a0a;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      margin: 0 auto;
+    }
+    .tag-hole {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      border: 1px solid #303030;
+      margin-bottom: 0.5rem;
+    }
+    .side-mockup {
+      display: flex;
+      gap: 1rem;
+      align-items: stretch;
+    }
+    .side-panel {
+      width: 50px;
+      border: 1px solid #1a1a1a;
+      border-radius: 4px;
+      background: #0a0a0a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      writing-mode: vertical-rl;
+      padding: 0.5rem;
+    }
+    .sticker-mockup {
+      border: 2px dashed #1a1a1a;
+      border-radius: 8px;
+      padding: 1.5rem;
+      background: rgba(10,10,10,0.8);
+    }
+
+    @media (max-width: 700px) {
+      .context-grid { grid-template-columns: 1fr; }
+      .brand-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>TRACE</h1>
+    <p class="subtitle">Brand Application Preview — ogni logo al suo posto</p>
+
+    <!-- ══════════ SECTION 1: I LOGHI ══════════ -->
+    <div class="section">
+      <div class="section-title">I Loghi <span>8 varianti, 8 ruoli</span></div>
+      <div class="brand-grid">
+        <!-- #30 Outlined Stencil -->
+        <div class="mockup">
+          <div class="mockup-header">
+            <span class="mockup-num">#30</span>
+            <span class="mockup-role">⭐ Logo Principale</span>
+          </div>
+          <div class="mockup-body">
+            <svg width="220" height="70" viewBox="0 0 220 60" style="max-width:100%">
+              <text x="110" y="38" font-family="'Space Grotesk','Arial Black',sans-serif" font-size="34" font-weight="900" fill="none" stroke="#fff" stroke-width="1.5" text-anchor="middle" dominant-baseline="central" letter-spacing="4">TRACE</text>
+              <text x="110" y="38" font-family="'Space Grotesk','Arial Black',sans-serif" font-size="34" font-weight="900" fill="#080808" text-anchor="middle" dominant-baseline="central" letter-spacing="4">TRACE</text>
+            </svg>
+          </div>
+          <div class="mockup-label">
+            <span class="mockup-label-text">Sito web / Header / Loading screen</span>
+            <span class="mockup-label-use">Animato stencil-draw</span>
+          </div>
+        </div>
+
+        <!-- #24 T Monogram -->
+        <div class="mockup">
+          <div class="mockup-header">
+            <span class="mockup-num">#24</span>
+            <span class="mockup-role">Favicon & Icon</span>
+          </div>
+          <div class="mockup-body" style="gap:1.5rem">
+            <div style="display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;justify-content:center">
+              <div style="background:#080808;border:1px solid #1a1a1a;border-radius:8px;padding:12px">
+                <svg width="32" height="32" viewBox="0 0 32 32">
+                  <text x="16" y="22" font-family="'Space Grotesk','Arial Black',sans-serif" font-size="22" font-weight="900" fill="#fff" text-anchor="middle">T</text>
+                </svg>
+              </div>
+              <div style="background:#080808;border:1px solid #1a1a1a;border-radius:12px;padding:16px">
+                <svg width="48" height="48" viewBox="0 0 48 48">
+                  <text x="24" y="34" font-family="'Space Grotesk','Arial Black',sans-serif" font-size="34" font-weight="900" fill="#fff" text-anchor="middle">T</text>
+                </svg>
+              </div>
+              <div style="background:#080808;border:1px solid #1a1a1a;border-radius:16px;padding:20px">
+                <svg width="64" height="64" viewBox="0 0 64 64">
+                  <text x="32" y="46" font-family="'Space Grotesk','Arial Black',sans-serif" font-size="46" font-weight="900" fill="#fff" text-anchor="middle">T</text>
+                </svg>
+              </div>
+              <div style="background:#080808;border:2px solid #303030;border-radius:50%;padding:10px">
+                <svg width="28" height="28" viewBox="0 0 28 28">
+                  <text x="14" y="20" font-family="'Space Grotesk','Arial Black',sans-serif" font-size="20" font-weight="900" fill="#fff" text-anchor="middle">T</text>
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div class="mockup-label">
+            <span class="mockup-label-text">Favicon / Avatar / Watermark / Timbro</span>
+            <span class="mockup-label-use">Iconico, minimal</span>
+          </div>
+        </div>
+
+        <!-- #22 Orizzontale + EST -->
+        <div class="mockup">
+          <div class="mockup-header">
+            <span class="mockup-num">#22</span>
+            <span class="mockup-role">Packaging</span>
+          </div>
+          <div class="mockup-body">
+            <svg width="280" height="60" viewBox="0 0 280 60" style="max-width:100%">
+              <text x="90" y="34" font-family="'Space Grotesk','Arial Black',sans-serif" font-size="28" font-weight="900" fill="#fff" text-anchor="middle" dominant-baseline="central">TRACE</text>
+              <line x1="180" y1="14" x2="180" y2="46" stroke="#303030" stroke-width="1.5"/>
+              <text x="230" y="34" font-family="'DM Mono',monospace" font-size="9" fill="#6b6558" text-anchor="middle" dominant-baseline="central" letter-spacing="3">EST 2026</text>
+            </svg>
+          </div>
+          <div class="mockup-label">
+            <span class="mockup-label-text">Scatole / Shopping bag / Invoice / Labels</span>
+            <span class="mockup-label-use">Pulito, professionale</span>
+          </div>
+        </div>
+
+        <!-- #25 T+RACE+STREETWEAR -->
+        <div class="mockup">
+          <div class="mockup-header">
+            <span class="mockup-num">#25</span>
+            <span class="mockup-role">Hang Tag</span>
+          </div>
+          <div class="mockup-body">
+            <div style="display:flex;align-items:center;gap:12px">
+              <span style="font-family:'Space Grotesk','Arial Black',sans-serif;font-size:52px;font-weight:900;color:#fff;line-height:1">T</span>
+              <div style="width:1px;height:50px;background:#303030"/>
+              <div style="display:flex;flex-direction:column">
+                <span style="font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:500;color:#a09a8a;letter-spacing:0.15em;line-height:1.1">RACE</span>
+                <span style="font-family:'DM Mono',monospace;font-size:7px;color:#4a4538;letter-spacing:0.3em;margin-top:2px">STREETWEAR</span>
+              </div>
+            </div>
+          </div>
+          <div class="mockup-label">
+            <span class="mockup-label-text">Cartellini / Clothing labels / Sticker</span>
+            <span class="mockup-label-use">Narrativo, forte</span>
+          </div>
+        </div>
+
+        <!-- #20 Glitch Skew -->
+        <div class="mockup">
+          <div class="mockup-header">
+            <span class="mockup-num">#20</span>
+            <span class="mockup-role">Limited Edition</span>
+          </div>
+          <div class="mockup-body">
+            <div style="position:relative">
+              <span style="font-family:'Space Grotesk','Arial Black',sans-serif;font-size:30px;font-weight:900;letter-spacing:0.08em;text-transform:uppercase;color:#fff;display:block;transform:skewX(-3deg);position:absolute;top:0;left:-2px;opacity:0.4;color:#a03a3a">TRACE</span>
+              <span style="font-family:'Space Grotesk','Arial Black',sans-serif;font-size:30px;font-weight:900;letter-spacing:0.08em;text-transform:uppercase;color:#fff;display:block;transform:skewX(2deg);position:absolute;top:0;left:2px;opacity:0.4;color:#3a5a8a">TRACE</span>
+              <span style="font-family:'Space Grotesk','Arial Black',sans-serif;font-size:30px;font-weight:900;letter-spacing:0.08em;text-transform:uppercase;color:#fff;position:relative">TRACE</span>
+            </div>
+          </div>
+          <div class="mockup-label">
+            <span class="mockup-label-text">Drop speciali / Poster / Teaser / Eventi</span>
+            <span class="mockup-label-use">Glitch, street</span>
+          </div>
+        </div>
+
+        <!-- #21 Stacked Vertical -->
+        <div class="mockup">
+          <div class="mockup-header">
+            <span class="mockup-num">#21</span>
+            <span class="mockup-role">Spazi Verticali</span>
+          </div>
+          <div class="mockup-body">
+            <div style="display:flex;align-items:center;gap:8px">
+              <span style="font-family:'Space Grotesk','Arial Black',sans-serif;font-size:52px;font-weight:900;color:#fff;line-height:1">T</span>
+              <div style="display:flex;flex-direction:column;gap:1px">
+                <span style="font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:500;color:#a09a8a;letter-spacing:0.15em;line-height:1">R</span>
+                <span style="font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:500;color:#a09a8a;letter-spacing:0.15em;line-height:1">A</span>
+                <span style="font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:500;color:#a09a8a;letter-spacing:0.15em;line-height:1">C</span>
+                <span style="font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:500;color:#a09a8a;letter-spacing:0.15em;line-height:1">E</span>
+              </div>
+            </div>
+          </div>
+          <div class="mockup-label">
+            <span class="mockup-label-text">Lato scatole / Spine / Totem / Banner verticali</span>
+            <span class="mockup-label-use">Verticale, presence</span>
+          </div>
+        </div>
+
+        <!-- #26 Thin Refined -->
+        <div class="mockup">
+          <div class="mockup-header">
+            <span class="mockup-num">#26</span>
+            <span class="mockup-role">Linea Premium</span>
+          </div>
+          <div class="mockup-body">
+            <span style="font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:300;letter-spacing:0.25em;text-transform:uppercase;color:#fff">TRACE</span>
+          </div>
+          <div class="mockup-label">
+            <span class="mockup-label-text">Lookbook / Editorial / Campagne pubblicitarie</span>
+            <span class="mockup-label-use">Elegante, leggero</span>
+          </div>
+        </div>
+
+        <!-- #50 Concrete -->
+        <div class="mockup">
+          <div class="mockup-header">
+            <span class="mockup-num">#50</span>
+            <span class="mockup-role">Graphic Tee</span>
+          </div>
+          <div class="mockup-body">
+            <div style="position:relative;padding:10px 24px">
+              <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:0.15">
+                <filter id="conc"><feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="4"/>
+                  <feColorMatrix type="matrix" values="0.1 0 0 0 0.05 0 0.1 0 0 0.05 0 0 0.1 0 0.05 0 0 0 1 0"/>
+                </filter>
+                <rect width="100%" height="100%" filter="url(#conc)"/>
+              </svg>
+              <span style="position:relative;z-index:1;font-family:'Space Grotesk','Arial Black',sans-serif;font-size:32px;font-weight:900;letter-spacing:0.08em;text-transform:uppercase;color:#fff">TRACE</span>
+            </div>
+          </div>
+          <div class="mockup-label">
+            <span class="mockup-label-text">Graphic tee / Tote bag / Poster / Manifesti</span>
+            <span class="mockup-label-use">Grezzo, unico</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════ SECTION 2: APPLICAZIONI REALI ══════════ -->
+    <div class="section">
+      <div class="section-title">Applicazioni Reali <span>come appaiono nei vari usi</span></div>
+
+      <div class="context-grid">
+
+        <!-- Scatola / Box -->
+        <div class="context-card">
+          <div class="context-label">📦 Scatola — #22 Orizzontale</div>
+          <div class="box-mockup brutal">
+            <svg width="260" height="50" viewBox="0 0 260 50" style="max-width:90%">
+              <text x="85" y="30" font-family="'Space Grotesk','Arial Black',sans-serif" font-size="26" font-weight="900" fill="#fff" text-anchor="middle" dominant-baseline="central">TRACE</text>
+              <line x1="170" y1="10" x2="170" y2="40" stroke="#303030" stroke-width="1.5"/>
+              <text x="215" y="30" font-family="'DM Mono',monospace" font-size="8" fill="#6b6558" text-anchor="middle" dominant-baseline="central" letter-spacing="3">EST 2026</text>
+            </svg>
+          </div>
+          <div style="margin-top:1rem;display:flex;gap:0.5rem;flex-wrap:wrap;justify-content:center">
+            <span style="font-size:0.45rem;border:1px solid #1a1a1a;padding:0.2rem 0.5rem;border-radius:2px;color:#4a4538;letter-spacing:0.1em">FRONTE</span>
+            <span style="font-size:0.45rem;border:1px solid #1a1a1a;padding:0.2rem 0.5rem;border-radius:2px;color:#4a4538;letter-spacing:0.1em">COPERCHIO</span>
+            <span style="font-size:0.45rem;border:1px solid #1a1a1a;padding:0.2rem 0.5rem;border-radius:2px;color:#4a4538;letter-spacing:0.1em">BAG</span>
+          </div>
+        </div>
+
+        <!-- Lato scatola -->
+        <div class="context-card">
+          <div class="context-label">📐 Lato scatola — #21 Stacked</div>
+          <div style="display:flex;gap:1rem;align-items:center;width:100%;justify-content:center">
+            <div style="width:45px;height:140px;border:1px solid #1a1a1a;border-radius:3px;background:#0a0a0a;display:flex;align-items:center;justify-content:center;writing-mode:vertical-rl;gap:4px">
+              <span style="font-family:'Space Grotesk','Arial Black',sans-serif;font-size:24px;font-weight:900;color:#fff">T</span>
+              <span style="font-family:'Space Grotesk',sans-serif;font-size:10px;font-weight:500;color:#a09a8a;letter-spacing:0.2em">RACE</span>
+            </div>
+            <span style="font-size:0.5rem;color:#4a4538;letter-spacing:0.1em">LATO<br/>SCATOLA</span>
+          </div>
+        </div>
+
+        <!-- Hang Tag -->
+        <div class="context-card">
+          <div class="context-label">🏷️ Hang Tag — #25 T+RACE</div>
+          <div class="tag-mockup">
+            <div class="tag-hole"></div>
+            <div style="display:flex;align-items:center;gap:8px">
+              <span style="font-family:'Space Grotesk','Arial Black',sans-serif;font-size:30px;font-weight:900;color:#fff;line-height:1">T</span>
+              <div style="width:1px;height:30px;background:#303392"/>
+              <div style="display:flex;flex-direction:column">
+                <span style="font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:500;color:#a09a8a;letter-spacing:0.15em;line-height:1.1">RACE</span>
+                <span style="font-family:'DM Mono',monospace;font-size:5px;color:#4a4538;letter-spacing:0.2em;margin-top:2px">STREETWEAR</span>
+              </div>
+            </div>
+            <div style="font-size:0.4rem;color:#4a4538;letter-spacing:0.15em;margin-top:4px">100% COTTON · M · MADE IN ITALY</div>
+          </div>
+        </div>
+
+        <!-- Teaser / Drop -->
+        <div class="context-card">
+          <div class="context-label">🔥 Drop Limitato — #20 Glitch Skew</div>
+          <div class="box-mockup limited" style="flex-direction:column;gap:0.8rem">
+            <div style="position:relative">
+              <span style="font-family:'Space Grotesk','Arial Black',sans-serif;font-size:22px;font-weight:900;letter-spacing:0.15em;text-transform:uppercase;display:block;transform:skewX(-3deg);position:absolute;top:0;left:-2px;opacity:0.5;color:#a03a3a">DROPS</span>
+              <span style="font-family:'Space Grotesk','Arial Black',sans-serif;font-size:22px;font-weight:900;letter-spacing:0.15em;text-transform:uppercase;display:block;transform:skewX(2deg);position:absolute;top:0;left:2px;opacity:0.5;color:#3a5a8a">DROPS</span>
+              <span style="font-family:'Space Grotesk','Arial Black',sans-serif;font-size:22px;font-weight:900;letter-spacing:0.15em;text-transform:uppercase;color:#fff;position:relative">DROPS</span>
+            </div>
+            <div style="position:relative">
+              <span style="font-family:'Space Grotesk','Arial Black',sans-serif;font-size:34px;font-weight:900;letter-spacing:0.08em;text-transform:uppercase;display:block;transform:skewX(-2deg);position:absolute;top:0;left:-2px;opacity:0.4;color:#a03a3a">TRACE</span>
+              <span style="font-family:'Space Grotesk','Arial Black',sans-serif;font-size:34px;font-weight:900;letter-spacing:0.08em;text-transform:uppercase;display:block;transform:skewX(2deg);position:absolute;top:0;left:2px;opacity:0.4;color:#3a5a8a">TRACE</span>
+              <span style="font-family:'Space Grotesk','Arial Black',sans-serif;font-size:34px;font-weight:900;letter-spacing:0.08em;text-transform:uppercase;color:#fff;position:relative">TRACE</span>
+            </div>
+            <span style="font-family:'DM Mono',monospace;font-size:7px;color:#a03a3a;letter-spacing:0.2em">#001 · LIMITED · 50 PIECES</span>
+          </div>
+        </div>
+
+        <!-- Maglietta / Graphic Tee -->
+        <div class="context-card">
+          <div class="context-label">👕 Graphic Tee — #50 Concrete</div>
+          <div class="sticker-mockup" style="display:flex;flex-direction:column;align-items:center;gap:0.5rem;width:100%">
+            <div style="position:relative;padding:8px 20px;width:100%;text-align:center">
+              <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:0.12">
+                <filter id="conc2"><feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="4"/>
+                  <feColorMatrix type="matrix" values="0.1 0 0 0 0.05 0 0.1 0 0 0.05 0 0 0.1 0 0.05 0 0 0 1 0"/>
+                </filter>
+                <rect width="100%" height="100%" filter="url(#conc2)"/>
+              </svg>
+              <span style="position:relative;z-index:1;font-family:'Space Grotesk','Arial Black',sans-serif;font-size:28px;font-weight:900;letter-spacing:0.08em;text-transform:uppercase;color:#fff">TRACE</span>
+            </div>
+            <div style="font-family:'DM Mono',monospace;font-size:0.4rem;color:#4a4538;letter-spacing:0.2em">STAMPA FRONTALE · NERO · 100% COTONE</div>
+          </div>
+        </div>
+
+        <!-- Sito web / Homepage -->
+        <div class="context-card">
+          <div class="context-label">🌐 Sito Web — #30 Outlined Stencil</div>
+          <div style="background:#080808;border:1px solid #1a1a1a;border-radius:8px;padding:1.5rem;width:100%">
+            <!-- Header mockup -->
+            <div style="display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #1a1a1a;padding-bottom:0.8rem;margin-bottom:0.8rem">
+              <div style="display:flex;align-items:center;gap:8px">
+                <svg width="36" height="20" viewBox="0 0 80 30">
+                  <rect x="2" y="2" width="76" height="26" rx="2" fill="none" stroke="#fff" stroke-width="1.2"/>
+                  <text x="40" y="17" font-family="'Space Grotesk','Arial Black',sans-serif" font-size="9" font-weight="900" fill="#fff" text-anchor="middle" letter-spacing="2">TRACE</text>
+                </svg>
+              </div>
+              <div style="display:flex;gap:10px">
+                <div style="width:20px;height:4px;background:#1a1a1a;border-radius:2px"/>
+                <div style="width:20px;height:4px;background:#1a1a1a;border-radius:2px"/>
+              </div>
+            </div>
+            <!-- Hero -->
+            <svg width="100%" height="50" viewBox="0 0 240 50">
+              <text x="120" y="32" font-family="'Space Grotesk','Arial Black',sans-serif" font-size="24" font-weight="900" fill="none" stroke="#fff" stroke-width="1.2" text-anchor="middle" dominant-baseline="central" letter-spacing="3">TRACE</text>
+              <text x="120" y="32" font-family="'Space Grotesk','Arial Black',sans-serif" font-size="24" font-weight="900" fill="#080808" text-anchor="middle" dominant-baseline="central" letter-spacing="3">TRACE</text>
+            </svg>
+            <div style="width:60%;height:3px;background:#1a1a1a;border-radius:2px;margin:0.3rem auto 0"/>
+          </div>
+        </div>
+
+        <!-- Editorial / Premium -->
+        <div class="context-card">
+          <div class="context-label">📖 Lookbook — #26 Thin Refined</div>
+          <div style="display:flex;gap:1rem;width:100%;align-items:center;justify-content:center">
+            <div style="flex:1;border:1px solid #1a1a1a;border-radius:4px;background:#0a0a0a;padding:1rem;max-width:200px">
+              <span style="font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:300;letter-spacing:0.25em;text-transform:uppercase;color:#fff;display:block;text-align:left">TRACE</span>
+              <div style="width:100%;height:1px;background:#1a1a1a;margin:0.5rem 0"/>
+              <span style="font-family:'DM Mono',monospace;font-size:5px;color:#4a4538;letter-spacing:0.15em">SS26 COLLECTION · LOOK 01</span>
+            </div>
+            <div style="width:60px;height:80px;border:1px solid #1a1a1a;border-radius:3px;background:#0d0d0d;display:flex;align-items:center;justify-content:center">
+              <div style="display:flex;flex-direction:column;align-items:center;gap:2px">
+                <span style="font-family:'Space Grotesk','Arial Black',sans-serif;font-size:20px;font-weight:900;color:#fff;line-height:1">T</span>
+                <span style="font-family:'DM Mono',monospace;font-size:4px;color:#4a4538;letter-spacing:0.1em">TRACE</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sticker Set -->
+        <div class="context-card">
+          <div class="context-label">🎯 Sticker Set — tutti i loghi</div>
+          <div style="display:flex;flex-wrap:wrap;gap:0.5rem;justify-content:center;width:100%">
+            <div style="border:1px dashed #303030;border-radius:4px;padding:4px 8px;background:rgba(10,10,10,0.6)">
+              <svg width="40" height="16" viewBox="0 0 80 30">
+                <rect x="1" y="1" width="78" height="28" rx="2" fill="none" stroke="#fff" stroke-width="1"/>
+                <text x="40" y="17" font-family="'Space Grotesk','Arial Black',sans-serif" font-size="8" font-weight="900" fill="#fff" text-anchor="middle" letter-spacing="1.5">TRACE</text>
+              </svg>
+            </div>
+            <div style="border:1px dashed #303030;border-radius:50%;padding:6px;background:rgba(10,10,10,0.6)">
+              <span style="font-family:'Space Grotesk','Arial Black',sans-serif;font-size:16px;font-weight:900;color:#fff">T</span>
+            </div>
+            <div style="border:1px dashed #303030;border-radius:4px;padding:4px 8px;background:rgba(10,10,10,0.6)">
+              <span style="font-family:'Space Grotesk',sans-serif;font-size:7px;font-weight:300;letter-spacing:0.2em;text-transform:uppercase;color:#fff">TRACE</span>
+            </div>
+            <div style="border:1px dashed #303030;border-radius:2px;padding:4px 6px;background:rgba(10,10,10,0.6)">
+              <div style="display:flex;align-items:center;gap:3px">
+                <span style="font-family:'Space Grotesk','Arial Black',sans-serif;font-size:14px;font-weight:900;color:#fff;line-height:1">T</span>
+                <span style="font-family:'Space Grotesk',sans-serif;font-size:6px;font-weight:500;color:#a09a8a;letter-spacing:0.1em">RACE</span>
+              </div>
+            </div>
+            <div style="border:1px dashed #303030;border-radius:2px;padding:4px 8px;background:rgba(10,10,10,0.6)">
+              <span style="font-family:'Space Grotesk',sans-serif;font-size:7px;font-weight:500;color:#a09a8a;letter-spacing:0.15em">TRACE</span>
+            </div>
+            <div style="border:1px dashed #303030;border-radius:2px;padding:4px 7px;background:rgba(10,10,10,0.6)">
+              <div style="display:flex;gap:2px">
+                <span style="font-family:'Space Grotesk','Arial Black',sans-serif;font-size:10px;font-weight:900;color:#fff;line-height:1">T</span>
+                <div style="display:flex;flex-direction:column;gap:0;line-height:1">
+                  <span style="font-family:'Space Grotesk',sans-serif;font-size:4px;font-weight:500;color:#a09a8a;letter-spacing:0.1em">R</span>
+                  <span style="font-family:'Space Grotesk',sans-serif;font-size:4px;font-weight:500;color:#a09a8a;letter-spacing:0.1em">A</span>
+                  <span style="font-family:'Space Grotesk',sans-serif;font-size:4px;font-weight:500;color:#a09a8a;letter-spacing:0.1em">C</span>
+                  <span style="font-family:'Space Grotesk',sans-serif;font-size:4px;font-weight:500;color:#a09a8a;letter-spacing:0.1em">E</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ══════════ SUMMARY ══════════ -->
+    <div class="section" style="border-top:1px solid #1a1a1a;padding-top:2rem">
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:0.5rem;font-size:0.55rem">
+        <div style="padding:0.5rem;border:1px solid #1a1a1a;border-radius:4px;text-align:center">
+          <span style="color:#a09a8a;font-family:'Space Grotesk',sans-serif;letter-spacing:0.1em">#30</span><br/>
+          <span style="color:#4a4538;font-size:0.45rem">SITO WEB</span>
+        </div>
+        <div style="padding:0.5rem;border:1px solid #1a1a1a;border-radius:4px;text-align:center">
+          <span style="color:#a09a8a;font-family:'Space Grotesk',sans-serif;letter-spacing:0.1em">#24</span><br/>
+          <span style="color:#4a4538;font-size:0.45rem">FAVICON</span>
+        </div>
+        <div style="padding:0.5rem;border:1px solid #1a1a1a;border-radius:4px;text-align:center">
+          <span style="color:#a09a8a;font-family:'Space Grotesk',sans-serif;letter-spacing:0.1em">#22</span><br/>
+          <span style="color:#4a4538;font-size:0.45rem">PACKAGING</span>
+        </div>
+        <div style="padding:0.5rem;border:1px solid #1a1a1a;border-radius:4px;text-align:center">
+          <span style="color:#a09a8a;font-family:'Space Grotesk',sans-serif;letter-spacing:0.1em">#25</span><br/>
+          <span style="color:#4a4538;font-size:0.45rem">HANG TAG</span>
+        </div>
+        <div style="padding:0.5rem;border:1px solid #1a1a1a;border-radius:4px;text-align:center">
+          <span style="color:#a09a8a;font-family:'Space Grotesk',sans-serif;letter-spacing:0.1em">#20</span><br/>
+          <span style="color:#4a4538;font-size:0.45rem">LIMITED DROP</span>
+        </div>
+        <div style="padding:0.5rem;border:1px solid #1a1a1a;border-radius:4px;text-align:center">
+          <span style="color:#a09a8a;font-family:'Space Grotesk',sans-serif;letter-spacing:0.1em">#21</span><br/>
+          <span style="color:#4a4538;font-size:0.45rem">LATO SCATOLA</span>
+        </div>
+        <div style="padding:0.5rem;border:1px solid #1a1a1a;border-radius:4px;text-align:center">
+          <span style="color:#a09a8a;font-family:'Space Grotesk',sans-serif;letter-spacing:0.1em">#26</span><br/>
+          <span style="color:#4a4538;font-size:0.45rem">LOOKBOOK</span>
+        </div>
+        <div style="padding:0.5rem;border:1px solid #1a1a1a;border-radius:4px;text-align:center">
+          <span style="color:#a09a8a;font-family:'Space Grotesk',sans-serif;letter-spacing:0.1em">#50</span><br/>
+          <span style="color:#4a4538;font-size:0.45rem">GRAPHIC TEE</span>
+        </div>
+      </div>
+      <p style="text-align:center;margin-top:2rem;font-size:0.6rem;color:#4a4538;letter-spacing:0.1em">
+        TRACE — BRAND SYSTEM · 8 LOGHI · 8 RUOLI
+      </p>
+    </div>
+  </div>
+</body>
+</html>
