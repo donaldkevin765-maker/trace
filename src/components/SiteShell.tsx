@@ -26,43 +26,59 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
           <div className="w-full h-[2px] bg-white/5 absolute top-0 animate-[scanline-sweep_4s_linear_infinite]" />
         </div>
 
-        {/* Stencil logo loading */}
+        {/* #30 Outlined Stencil — logo loading animato */}
         <div className="text-center">
-          <svg className="mx-auto mb-4" width="240" height="90" viewBox="0 0 240 90">
+          <svg className="mx-auto" width="280" height="100" viewBox="0 0 280 100">
+            {/* Stencil border — draws first */}
             <rect
-              x="8" y="8" width="224" height="74" rx="5"
-              fill="none" stroke="#ffffff" strokeWidth="2.5"
-              className="logo-stencil-path"
+              x="6" y="6" width="268" height="88" rx="5"
+              fill="none" stroke="#ffffff" strokeWidth="2"
+              strokeDasharray="700" strokeDashoffset="700"
+              style={{ animation: "stencil-draw 1.5s ease-out forwards" }}
             />
+            {/* TRACE outlined — stencil draw */}
+            <text
+              x="140" y="48" textAnchor="middle" dominantBaseline="central"
+              fontFamily="'Space Grotesk','Arial Black',sans-serif"
+              fontSize="42" fontWeight="900" letterSpacing="6"
+              fill="none" stroke="#ffffff" strokeWidth="1.5"
+              strokeDasharray="500" strokeDashoffset="500"
+              style={{ animation: "stencil-draw 1.8s ease-out forwards", animationDelay: "0.6s" }}
+            >
+              TRACE
+            </text>
+            {/* TRACE fill — fades in after stroke */}
+            <text
+              x="140" y="48" textAnchor="middle" dominantBaseline="central"
+              fontFamily="'Space Grotesk','Arial Black',sans-serif"
+              fontSize="42" fontWeight="900" letterSpacing="6"
+              fill="#ffffff" opacity="0"
+              style={{ animation: "letter-fade-in 0.5s ease-out forwards", animationDelay: "2.2s" }}
+            >
+              TRACE
+            </text>
+            {/* Tagline */}
+            <text
+              x="140" y="72" textAnchor="middle" dominantBaseline="central"
+              fontFamily="'DM Mono',monospace" fontSize="7"
+              fill="#6b6558" letterSpacing="4" opacity="0"
+              style={{ animation: "tagline-fade 0.8s ease-out forwards", animationDelay: "2.8s" }}
+            >
+              EST. 2026
+            </text>
           </svg>
 
-          <div className="flex justify-center gap-1.5">
-            {"TRACE".split("").map((letter, i) => (
-              <span
-                key={i}
-                className="inline-block text-white font-[family-name:var(--font-display)] text-3xl tracking-[0.12em] uppercase logo-letter"
-                style={{
-                  opacity: 0,
-                  animation: `letter-fade-in 0.4s ease-out forwards`,
-                  animationDelay: `${1.6 + i * 0.2}s`,
-                }}
-              >
-                {letter}
-              </span>
-            ))}
-          </div>
-
-          {/* Glitch overlay */}
+          {/* Glitch flash overlays */}
           <div
             className="text-3xl font-[family-name:var(--font-display)] tracking-[0.12em] uppercase absolute inset-0 flex items-center justify-center pointer-events-none"
-            style={{ color: "#a03a3a", animation: "glitch-flash 3s ease-in-out infinite", animationDelay: "1.5s" }}
+            style={{ color: "#a03a3a", animation: "glitch-flash 3s ease-in-out infinite", animationDelay: "2.5s" }}
             aria-hidden
           >
             TRACE
           </div>
           <div
             className="text-3xl font-[family-name:var(--font-display)] tracking-[0.12em] uppercase absolute inset-0 flex items-center justify-center pointer-events-none"
-            style={{ color: "#3a5a8a", animation: "glitch-flash 2.5s ease-in-out infinite", animationDelay: "2s" }}
+            style={{ color: "#3a5a8a", animation: "glitch-flash 2.5s ease-in-out infinite", animationDelay: "3s" }}
             aria-hidden
           >
             TRACE

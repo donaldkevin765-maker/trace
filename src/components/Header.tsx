@@ -37,25 +37,39 @@ export function Header() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-        {/* TRACE Logo — stencil style */}
+        {/* TRACE Logo — #30 Outlined Stencil animato */}
         <Link href="/" className="relative group">
-          <div className="flex items-center gap-3">
-            {/* Stencil border box */}
-            <svg width="56" height="28" viewBox="0 0 56 28" className="absolute -left-1 -top-0.5">
-              <rect
-                x="2" y="2" width="52" height="24" rx="3"
-                fill="none" stroke="#ffffff" strokeWidth="1.5"
-                className="transition-all duration-500"
-                style={{
-                  strokeDasharray: "148",
-                  strokeDashoffset: scrolled ? "0" : "148",
-                }}
-              />
-            </svg>
-            <span className="text-white font-[family-name:var(--font-display)] text-lg tracking-[0.15em] uppercase relative z-10 transition-colors duration-300 group-hover:text-[#a09a8a]">
+          <svg width="100" height="32" viewBox="0 0 100 32" className="block">
+            {/* Stencil border */}
+            <rect
+              x="2" y="2" width="96" height="28" rx="3"
+              fill="none" stroke="#ffffff" strokeWidth="1.2"
+              strokeDasharray="240" strokeDashoffset={mounted ? "0" : "240"}
+              style={{ transition: "stroke-dashoffset 1.2s ease-out", transitionDelay: "0.3s" }}
+            />
+            {/* Outlined text — stencil draw */}
+            <text
+              x="50" y="20" textAnchor="middle" dominantBaseline="central"
+              fontFamily="'Space Grotesk','Arial Black',sans-serif"
+              fontSize="14" fontWeight="900" letterSpacing="3"
+              fill="none" stroke="#ffffff" strokeWidth="1"
+              strokeDasharray="200" strokeDashoffset={mounted ? "0" : "200"}
+              style={{ transition: "stroke-dashoffset 1.5s ease-out", transitionDelay: "0.6s" }}
+            >
               TRACE
-            </span>
-          </div>
+            </text>
+            {/* Fill layer — appears after stroke draws */}
+            <text
+              x="50" y="20" textAnchor="middle" dominantBaseline="central"
+              fontFamily="'Space Grotesk','Arial Black',sans-serif"
+              fontSize="14" fontWeight="900" letterSpacing="3"
+              fill="#ffffff" opacity={mounted ? 1 : 0}
+              style={{ transition: "opacity 0.4s ease-out", transitionDelay: "1.6s" }}
+              className="group-hover:opacity-60 transition-opacity duration-300"
+            >
+              TRACE
+            </text>
+          </svg>
         </Link>
 
         {/* Desktop nav */}
