@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
+import { ProductImage } from "@/components/ProductImage"
 
 const PRODUCTS = [
   { id: "trace-set-001", name: "Hoodie + Pants Set", price: 89, category: "Set" },
@@ -52,13 +53,7 @@ export default function ProductListing() {
               className="group trace-card p-4 hover:border-[#303030] transition-all duration-500"
             >
               <div className="aspect-[3/4] bg-[#0a0a0a] mb-4 flex items-center justify-center overflow-hidden relative">
-                <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                  <rect x="8" y="8" width="calc(100% - 16px)" height="calc(100% - 16px)" rx="4"
-                    fill="none" stroke="#ffffff" strokeWidth="1" strokeDasharray="4 4" className="opacity-20" />
-                </svg>
-                <div className="text-[#1a1a1a] font-[family-name:var(--font-display)] text-5xl tracking-[0.15em] uppercase group-hover:text-[#303030] transition-colors duration-300">
-                  T
-                </div>
+                <ProductImage category={product.category} className="w-full h-full p-6" />
               </div>
               <div className="space-y-1">
                 <p className="text-[#6b6558] text-[10px] tracking-[0.2em] uppercase font-[family-name:var(--font-mono)]">{product.category}</p>

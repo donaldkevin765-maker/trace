@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { useParams, notFound } from "next/navigation"
 import Link from "next/link"
 import { useCart } from "@/lib/store"
+import { ProductImage } from "@/components/ProductImage"
 
 const FALLBACK_PRODUCT = {
   id: "trace-set-001",
@@ -44,9 +45,7 @@ export default function ProductPage() {
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
         {/* Image */}
         <div className="aspect-[4/5] bg-[#0a0a0a] border border-[#1a1a1a] flex items-center justify-center">
-          <div className="text-center">
-            <div className="text-[#1a1a1a] font-[family-name:var(--font-display)] text-8xl tracking-[0.15em] uppercase">T</div>
-          </div>
+          <ProductImage category={product.category} className="w-full h-full p-10" />
         </div>
 
         {/* Details */}
